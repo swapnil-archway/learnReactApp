@@ -5926,6 +5926,7 @@ __metadata:
     react-native-keyboard-aware-scroll-view: ^0.9.5
     react-native-safe-area-context: 4.4.1
     react-native-screens: ~3.18.0
+    react-native-share: ^8.0.0
     reactotron-react-native: ^5.0.3
   languageName: unknown
   linkType: soft
@@ -7742,6 +7743,13 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 8f7202baced736220710138469aea2c7b543662d820eb47170bfc98a0503f8c764d7509596ccbcc76cac6158e47a2c029444d6e1f78c20e98bcafeda15027ac1
+  languageName: node
+  linkType: hard
+
+"react-native-share@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "react-native-share@npm:8.0.0"
+  checksum: f22e672bae9eb5da793b1a2296d45a4554440a537e479b21ecfcc61fc5619ba7e7d238a3b69f5276709bb47e2758705cf47763b7c9c80fee84241b04b410d86e
   languageName: node
   linkType: hard
 

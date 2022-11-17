@@ -4,6 +4,7 @@ import Swiper from "react-native-deck-swiper";
 import { Card } from "../../components/Card";
 import { Screen } from "../../ui";
 import { getCardList } from "../../services/api";
+import photoCards from "../../constants/photoCards";
 
 const Home = () => {
   const useSwiper = useRef(null).current;
@@ -22,7 +23,7 @@ const Home = () => {
         ref={useSwiper}
         animateCardOpacity
         containerStyle={styles.container}
-        cards={data}
+        cards={photoCards}
         renderCard={(card) => <Card card={card} />}
         cardIndex={0}
         backgroundColor="white"
