@@ -1,40 +1,17 @@
 import React from "react";
-import { Image, BackHandler, View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import Routes from "../../routes";
 import { NavigationContainer } from "@react-navigation/native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { Home } from "../../screens/Home";
 import { Topic } from "../../screens/Topic";
 import Target from "../../screens/Target";
 import Settings from "../../screens/Settings";
-
-import { color } from "../../../theme";
-// import {TransactionHistoryStack} from './transaction-history-stack';
-// import {NotificationsStack} from './notifications-stack';
-// import {ProfitLossStack} from './profit-loss-stack';
-// import {useDispatch, useSelector} from 'react-redux';
-// import {exitAppOnBackHandle} from '../../../redux/slices';
-
-// import {Text} from '../../../ui-components';
+import { color } from "../../theme";
+import Home from "../../screens/Home";
 
 const BottomTabs = createBottomTabNavigator();
 
 export const BottomTabsStack = () => {
-  //   const dispatch = useDispatch();
-  //   const {badge} = useSelector((state) => state.fcmNotification);
-
-  //   React.useEffect(() => {
-  //     const handleBackButton = () => {
-  //       dispatch(exitAppOnBackHandle());
-  //       // console.log('>> back handler called');
-  //       return false;
-  //     };
-  //     BackHandler.addEventListener('hardwareBackPress', handleBackButton);
-  //     return () =>
-  //       BackHandler.removeEventListener('hardwareBackPress', handleBackButton);
-  //   }, [dispatch]);
-
   return (
     <NavigationContainer>
       <BottomTabs.Navigator
