@@ -6,7 +6,7 @@ import { Screen } from "../../ui";
 import { getCardList } from "../../services/api";
 import photoCards from "../../constants/photoCards";
 
-const Home = () => {
+export const Home = () => {
   const useSwiper = useRef(null).current;
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -47,7 +47,6 @@ const Home = () => {
   );
 };
 
-export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

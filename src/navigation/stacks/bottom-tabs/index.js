@@ -8,6 +8,11 @@ import Target from "../../../screens/Target";
 import Settings from "../../../screens/Settings";
 import { color } from "../../../theme";
 import Home from "../../../screens/Home";
+import Routes from "../../routes";
+import { DashboardStack } from "./dashboard-stack";
+import { TopicStack } from "./topic-stack";
+import { AccountStack } from "./account-stack";
+import { TargetStack } from "./target-stack";
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -34,7 +39,7 @@ export const BottomTabsStack = () => {
       }}
       backBehavior={"none"}
     >
-      <BottomTabs.Screen
+      {/* <BottomTabs.Screen
         name="Home"
         component={Home}
         options={{
@@ -49,10 +54,26 @@ export const BottomTabsStack = () => {
             );
           },
         }}
+      /> */}
+      <BottomTabs.Screen
+        name={Routes.DASHBOARD_STACK}
+        component={DashboardStack}
+        options={{
+          unmountOnBlur: true,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Ionicons
+                name="ios-home"
+                color={focused ? color.primary : "#8F8F8F"}
+                size={26}
+              />
+            );
+          },
+        }}
       />
       <BottomTabs.Screen
-        name="Topic"
-        component={Topic}
+        name={Routes.TOPIC_STACK}
+        component={TopicStack}
         options={{
           unmountOnBlur: true,
           tabBarIcon: ({ focused }) => {
@@ -67,8 +88,8 @@ export const BottomTabsStack = () => {
         }}
       />
       <BottomTabs.Screen
-        name="Target"
-        component={Target}
+        name={Routes.TARGET_STACK}
+        component={TargetStack}
         options={{
           unmountOnBlur: true,
           tabBarIcon: ({ focused }) => {
@@ -83,8 +104,8 @@ export const BottomTabsStack = () => {
         }}
       />
       <BottomTabs.Screen
-        name="Settings"
-        component={Settings}
+        name={Routes.ACCOUNT_STACK}
+        component={AccountStack}
         options={{
           unmountOnBlur: true,
           tabBarIcon: ({ focused }) => {

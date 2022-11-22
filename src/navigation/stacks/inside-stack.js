@@ -4,8 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Routes from "../routes";
 import { MainStack } from "./main-stack";
 
-// import * as Sentry from '@sentry/react-native';
-
 const Stack = createStackNavigator();
 
 export function InnerStack() {
@@ -15,7 +13,6 @@ export function InnerStack() {
         headerShown: false,
       }}
     >
-      {/* <Stack.Screen name={Routes.MAIN_STACK} component={MainStack} /> */}
       <Stack.Screen name={Routes.MAIN_STACK} component={MainStack} />
     </Stack.Navigator>
   );

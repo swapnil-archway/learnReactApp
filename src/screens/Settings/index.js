@@ -1,7 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
+import Routes from "../../navigation/routes";
+import { useBackHandler } from "../../hooks";
 
-const Settings = () => {
+export const Settings = ({ navigation }) => {
+  useBackHandler(navigation, Routes.DASHBOARD_STACK);
   return (
     <View style={styles.container}>
       <Text>Settings Screen</Text>
@@ -9,7 +12,6 @@ const Settings = () => {
   );
 };
 
-export default Settings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

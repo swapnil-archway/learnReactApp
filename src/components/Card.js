@@ -11,11 +11,9 @@ import {
 const { height } = Dimensions.get("screen");
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
-
 import { SheetOptions, useBottomSheet } from "../context";
-import { RootNavigation } from "../navigation";
-import Routes from "../navigation/routes";
 import { color } from "../theme";
+
 export const Card = ({ card }) => {
   const { openBottomSheet } = useBottomSheet();
 

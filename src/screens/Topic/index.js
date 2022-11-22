@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-
-export const Topic = () => {
+import Routes from "../../navigation/routes";
+import { useBackHandler } from "../../hooks";
+export const Topic = ({ navigation }) => {
+  useBackHandler(navigation, Routes.DASHBOARD_STACK);
   return (
     <View style={styles.container}>
       <Text>Topic Screen</Text>

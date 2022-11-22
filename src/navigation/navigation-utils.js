@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { color } from "../theme";
 
 // Methods on the ref - https://reactnavigation.org/docs/navigation-container
 export const RootNavigation = {

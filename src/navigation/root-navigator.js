@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "react-native";
 import { color } from "../theme";
 import Routes from "./routes";
-import { MainStack } from "./stacks/main-stack";
 import { dialogOptions } from "./navigation-utils";
 import { Backdrop } from "../screens";
 import { InsideStack } from "./stacks/inside-stack";

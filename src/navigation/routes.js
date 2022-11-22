@@ -9,6 +9,18 @@ const Routes = {
           DASHBOARD_SCREEN: "Dashboard Screen",
         },
       },
+      ACCOUNT_STACK: "ACCOUNT Stack",
+      ...{
+        SETTING_SCREEN: "Account Screen",
+      },
+      TOPIC_STACK: "TOPIC Stack",
+      ...{
+        TOPIC_SCREEN: "Topic Screen",
+      },
+      TARGET_STACK: "TARGET Stack",
+      ...{
+        TARGET_SCREEN: "Target Screen",
+      },
     },
   },
   INSIDE_STACK: "Inside Stack",
