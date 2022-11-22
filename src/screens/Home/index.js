@@ -17,6 +17,10 @@ const Home = () => {
     fetchData();
   }, []);
 
+  const onSwipedBottomCard = (index) => {
+    console.log("test", photoCards.length - 2 <= index);
+  };
+
   return (
     <Screen>
       <Swiper
@@ -30,10 +34,14 @@ const Home = () => {
         stackSize={2}
         infinite
         horizontalSwipe={false}
-        // cardHorizontalMargin={0}
-        cardVerticalMargin={10}
-        showSecondCard
+        cardHorizontalMargin={0}
+        cardVerticalMargin={0}
         animateOverlayLabelsOpacity
+        // swipeBackCard
+        swipeTop
+        // goBackToPreviousCardOnSwipeTop={true}
+        // goBackToPreviousCardOnSwipeBottom={true}
+        onSwipedBottom={(cardIndex) => onSwipedBottomCard(cardIndex)}
       />
     </Screen>
   );

@@ -1,10 +1,10 @@
-import * as React from 'react';
-import {Text as ReactNativeText} from 'react-native';
-import {mergeAll, flatten} from 'ramda';
-import {typography, color} from '../../theme';
+import * as React from "react";
+import { Text as ReactNativeText } from "react-native";
+import { mergeAll, flatten } from "ramda";
+import { typography, color } from "../../theme";
 
 const BASE = {
-  fontFamily: typography.primary,
+  // fontFamily: typography.primary,
   color: color.text,
   fontSize: 14,
 };
@@ -18,22 +18,22 @@ const variants = {
   /**
    * A bold version of the default text.
    */
-  bold: {...BASE, fontFamily: typography.secondary},
-
+  bold: { ...BASE },
+  // fontFamily: typography.secondary
   /**
    * Large headers.
    */
-  header: {...BASE, fontSize: 16, fontFamily: typography.secondary},
-
+  header: { ...BASE, fontSize: 16 },
+  // fontFamily: typography.secondary
   /**
    * A smaller piece of secondary information.
    */
-  secondary: {...BASE, fontSize: 14, fontFamily: typography.secondary},
-
+  secondary: { ...BASE, fontSize: 14 },
+  // fontFamily: typography.secondary
   /**
    * Field labels that appear on forms above the inputs.
    */
-  fieldLabel: {...BASE, fontSize: 16},
+  fieldLabel: { ...BASE, fontSize: 16 },
 
   /**
    * Field error
@@ -41,20 +41,20 @@ const variants = {
   fieldError: {
     ...BASE,
     fontSize: 15,
-    fontFamily: typography.tertiary,
+    // fontFamily: typography.tertiary,
     color: color.palette.grapefruit,
   },
 
   italic: {
     ...BASE,
     fontSize: 14,
-    fontFamily: typography.tertiary,
+    // fontFamily: typography.tertiary,
   },
 
   success: {
     ...BASE,
     fontSize: 15,
-    fontFamily: typography.primary,
+    // fontFamily: typography.primary,
     color: color.palette.darkMintGreen,
   },
 };
@@ -67,7 +67,7 @@ const variants = {
 export function Text(props) {
   // grab the props
   const {
-    variant = 'default',
+    variant = "default",
     text,
     children,
     style: styleOverride,
@@ -78,7 +78,7 @@ export function Text(props) {
   const content = text || children;
 
   const style = mergeAll(
-    flatten([variants[variant] || variants.default, styleOverride]),
+    flatten([variants[variant] || variants.default, styleOverride])
   );
 
   return (

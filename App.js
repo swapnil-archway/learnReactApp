@@ -1,7 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { BottomTabsStack } from "./src/navigation/bottom-tabs";
 import Reactotron from "reactotron-react-native";
+import { BottomSheetProvider, ThemeContextProvider } from "./src/context";
+import {
+  RootNavigator,
+  setRootNavigation,
+  useNavigationPersistence,
+} from "./src/navigation";
+import { useRef } from "react";
+import { NAVIGATION_PERSISTENCE_KEY } from "./src/constants";
 
 if (__DEV__) {
   // At this point, Reactotron is hooked up.
@@ -11,7 +18,22 @@ if (__DEV__) {
   });
 }
 export default function App() {
-  return <BottomTabsStack />;
+  const navigationRef = useRef();
+  setRootNavigation(navigationRef);
+
+  // const { initialNavigationState, onNavigationStateChange } =
+  //   useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
+  return (
+    <ThemeContextProvider>
+      <BottomSheetProvider>
+        <RootNavigator
+          ref={navigationRef}
+          // initialState={initialNavigationState}
+          // onStateChange={onNavigationStateChange}
+        />
+      </BottomSheetProvider>
+    </ThemeContextProvider>
+  );
 }
 
 const styles = StyleSheet.create({

@@ -10,8 +10,15 @@ import {
 } from "react-native";
 const { height } = Dimensions.get("screen");
 import Ionicons from "react-native-vector-icons/Ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
+
+import { SheetOptions, useBottomSheet } from "../context";
+import { RootNavigation } from "../navigation";
+import Routes from "../navigation/routes";
 import { color } from "../theme";
 export const Card = ({ card }) => {
+  const { openBottomSheet } = useBottomSheet();
+
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -48,9 +55,61 @@ export const Card = ({ card }) => {
         <View style={styles.button}>
           <Ionicons name="md-add-sharp" color={color.primary} size={26} />
         </View>
-        <View>
+        <TouchableOpacity
+          onPress={() => {
+            // RootNavigation.navigate(Routes.INSIDE_MODAL_STACK, {
+            //   screen: Routes.BACKDROP,
+            //   params: {
+            //     backdropHeight: "20%",
+            //   },
+            // });
+            openBottomSheet({
+              type: SheetOptions.CUSTOM_LIST,
+              selectOptions: [
+                { label: "Like", icon: "like1" },
+                { label: "Unlike", icon: "dislike1" },
+                { label: "Report", icon: "questioncircle" },
+              ],
+              onPressItem: (option) => {
+                console.log("optionn", option);
+              },
+              value: "Take Image",
+              snaps: ["20%", "25%"],
+              itemLayout: ({
+                item: { label, icon },
+                index,
+                callback,
+                closeBottomSheet,
+              }) => {
+                return (
+                  <TouchableOpacity
+                    style={styles.customListItem(index % 2)}
+                    key={index.toString()}
+                    onPress={() => {
+                      callback.current(label);
+                      closeBottomSheet();
+                    }}
+                  >
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        // justifyContent: "center",
+                        marginVertical: 0,
+                        marginHorizontal: "auto",
+                      }}
+                    >
+                      <AntDesign name={icon} color={color.primary} size={20} />
+                      <Text style={styles.title}>{label}</Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              },
+            });
+          }}
+        >
           <Ionicons name="ellipsis-vertical" color={color.primary} size={26} />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -59,7 +118,7 @@ export const Card = ({ card }) => {
 const styles = StyleSheet.create({
   card: {
     /* Setting the height according to the screen height, it also could be fixed value or based on percentage. */
-    height: height - 130,
+    height: height - 100,
     // justifyContent: "center",
     // alignItems: "center",
     backgroundColor: "white",
@@ -71,7 +130,7 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 6,
     shadowOpacity: 0.3,
-    elevation: 2,
+    // elevation: 2,
   },
   image: {
     // borderRadius: 5,
@@ -132,5 +191,21 @@ const styles = StyleSheet.create({
   button: {
     width: "15%",
     // height: 40,
+  },
+  customListItem: (isEven) => ({
+    width: "100%",
+    // aspectRatio: 5,
+    // backgroundColor: isEven ? "white" : color.palette.paleGrey,
+    flexDirection: "column",
+    // alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    flex: 1,
+  }),
+  title: {
+    fontSize: 14,
+    color: color.palette.navyTwo,
+    marginBottom: 10,
+    // marginLeft: 10,
   },
 });
