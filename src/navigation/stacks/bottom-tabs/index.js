@@ -33,7 +33,7 @@ export const BottomTabsStack = () => {
         tabBarShowLabel: false,
         tabBarActiveTintColor: "#000",
         tabBarStyle: {
-          minHeight: 58,
+          height: 58,
         },
         headerShown: false,
       }}

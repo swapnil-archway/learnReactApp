@@ -8,15 +8,17 @@ import {
   TouchableOpacity,
   Share,
 } from "react-native";
-const { height } = Dimensions.get("screen");
+const { height, width } = Dimensions.get("window");
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { SheetOptions, useBottomSheet } from "../context";
 import { color } from "../theme";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 export const Card = ({ card }) => {
   const { openBottomSheet } = useBottomSheet();
-
+  const tabBarHeight = useBottomTabBarHeight();
+  console.log("tabBarHeight", tabBarHeight);
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -44,7 +46,14 @@ export const Card = ({ card }) => {
     //     {`${card?.attributes?.details?.slice(0, 45)}...`}
     //   </Text>
     // </View>
-    <View activeOpacity={1} style={styles.card}>
+    <View
+      activeOpacity={1}
+      style={[
+        styles.card,
+        { height: height - tabBarHeight },
+        // { height: height - (StatusBar.currentHeight + tabBarHeight) },
+      ]}
+    >
       <Image style={styles.image} source={card.photo} resizeMode="cover" />
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={onShare}>
@@ -72,7 +81,7 @@ export const Card = ({ card }) => {
                 console.log("optionn", option);
               },
               value: "Take Image",
-              snaps: ["20%", "25%"],
+              snaps: ["20%", height / 4],
               itemLayout: ({
                 item: { label, icon },
                 index,
@@ -93,11 +102,12 @@ export const Card = ({ card }) => {
                         flex: 1,
                         flexDirection: "row",
                         // justifyContent: "center",
-                        marginVertical: 0,
-                        marginHorizontal: "auto",
+                        // marginVertical: 0,
+                        // marginHorizontal: "auto",
+                        alignItems: "center",
                       }}
                     >
-                      <AntDesign name={icon} color={color.primary} size={20} />
+                      <AntDesign name={icon} color={color.primary} size={24} />
                       <Text style={styles.title}>{label}</Text>
                     </View>
                   </TouchableOpacity>
@@ -116,7 +126,7 @@ export const Card = ({ card }) => {
 const styles = StyleSheet.create({
   card: {
     /* Setting the height according to the screen height, it also could be fixed value or based on percentage. */
-    height: height - 100,
+    // height: height - tabBarHeight,
     // justifyContent: "center",
     // alignItems: "center",
     backgroundColor: "white",
@@ -180,11 +190,12 @@ const styles = StyleSheet.create({
   },
   container: {
     // flex: 1,
-    alignItems: "center",
-    margin: 10,
+    // alignItems: "center",
+    // margin: 10,
     flexDirection: "row",
     alignSelf: "flex-end",
-    justifyContent: "space-between",
+    padding: 10,
+    // justifyContent: "space-between",
   },
   button: {
     width: "15%",
@@ -201,9 +212,9 @@ const styles = StyleSheet.create({
     flex: 1,
   }),
   title: {
-    fontSize: 14,
+    fontSize: 16,
     color: color.palette.navyTwo,
-    marginBottom: 10,
-    // marginLeft: 10,
+    // marginBottom: 10,
+    marginLeft: 10,
   },
 });

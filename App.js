@@ -9,6 +9,10 @@ import {
 } from "./src/navigation";
 import { useRef } from "react";
 import { NAVIGATION_PERSISTENCE_KEY } from "./src/constants";
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+} from "react-native-safe-area-context";
 
 if (__DEV__) {
   // At this point, Reactotron is hooked up.
@@ -24,15 +28,17 @@ export default function App() {
   // const { initialNavigationState, onNavigationStateChange } =
   //   useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
   return (
-    <ThemeContextProvider>
-      <BottomSheetProvider>
-        <RootNavigator
-          ref={navigationRef}
-          // initialState={initialNavigationState}
-          // onStateChange={onNavigationStateChange}
-        />
-      </BottomSheetProvider>
-    </ThemeContextProvider>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+      <ThemeContextProvider>
+        <BottomSheetProvider>
+          <RootNavigator
+            ref={navigationRef}
+            // initialState={initialNavigationState}
+            // onStateChange={onNavigationStateChange}
+          />
+        </BottomSheetProvider>
+      </ThemeContextProvider>
+    </SafeAreaProvider>
   );
 }
 
