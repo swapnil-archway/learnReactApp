@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -16,13 +16,14 @@ import { color } from "../theme";
 
 const screenHeight = Math.round((width * 9) / 16);
 const screenWidth = width;
-export const Card = ({ card }) => {
+export const Card = ({ news, lastNews }) => {
   const { openBottomSheet } = useBottomSheet();
   const onShare = async () => {
     try {
       const result = await Share.share({
         message:
           "React Native | A framework for building native apps using React",
+        url: news.link,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -49,70 +50,93 @@ export const Card = ({ card }) => {
       activeOpacity={1}
       style={[styles.card, { height: screenHeight, width: screenWidth }]}
     >
-      <Image style={styles.image} source={card.photo} resizeMode="cover" />
+      <View style={{ flex: 1 }}>
+        <Text style={styles.header}>{news?.attributes?.title ?? ""}</Text>
+        {news?.photo && (
+          <Image style={styles.image} source={news?.photo} resizeMode="cover" />
+        )}
+        <Text style={styles.abstract}>{news?.attributes?.abstract ?? ""}</Text>
+      </View>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={onShare}>
-          <Ionicons name="md-share-social" color={color.primary} size={26} />
-        </TouchableOpacity>
-        <View style={styles.button}>
-          <Ionicons name="md-add-sharp" color={color.primary} size={26} />
-        </View>
-        <TouchableOpacity
-          onPress={() => {
-            // RootNavigation.navigate(Routes.INSIDE_MODAL_STACK, {
-            //   screen: Routes.BACKDROP,
-            //   params: {
-            //     backdropHeight: "20%",
-            //   },
-            // });
-            openBottomSheet({
-              type: SheetOptions.CUSTOM_LIST,
-              selectOptions: [
-                { label: "Like", icon: "like1" },
-                { label: "Unlike", icon: "dislike1" },
-                { label: "Report", icon: "questioncircle" },
-              ],
-              onPressItem: (option) => {
-                console.log("optionn", option);
-              },
-              value: "Take Image",
-              snaps: ["20%", height / 4],
-              itemLayout: ({
-                item: { label, icon },
-                index,
-                callback,
-                closeBottomSheet,
-              }) => {
-                return (
-                  <TouchableOpacity
-                    style={styles.customListItem(index % 2)}
-                    key={index.toString()}
-                    onPress={() => {
-                      callback.current(label);
-                      closeBottomSheet();
-                    }}
-                  >
-                    <View
-                      style={{
-                        flex: 1,
-                        flexDirection: "row",
-                        // justifyContent: "center",
-                        // marginVertical: 0,
-                        // marginHorizontal: "auto",
-                        alignItems: "center",
+        <View style={styles.btnContainer}>
+          <TouchableOpacity style={styles.button} onPress={onShare}>
+            <Ionicons name="md-share-social" color={color.primary} size={26} />
+          </TouchableOpacity>
+          <View style={styles.button}>
+            <Ionicons name="md-add-sharp" color={color.primary} size={26} />
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              // RootNavigation.navigate(Routes.INSIDE_MODAL_STACK, {
+              //   screen: Routes.BACKDROP,
+              //   params: {
+              //     backdropHeight: "20%",
+              //   },
+              // });
+              openBottomSheet({
+                type: SheetOptions.CUSTOM_LIST,
+                selectOptions: [
+                  { label: "Like", icon: "like1" },
+                  { label: "Unlike", icon: "dislike1" },
+                  { label: "Report", icon: "questioncircle" },
+                ],
+                onPressItem: (option) => {
+                  console.log("optionn", option);
+                },
+                value: "Take Image",
+                snaps: ["20%", height / 4],
+                itemLayout: ({
+                  item: { label, icon },
+                  index,
+                  callback,
+                  closeBottomSheet,
+                }) => {
+                  return (
+                    <TouchableOpacity
+                      style={styles.customListItem(index % 2)}
+                      key={index.toString()}
+                      onPress={() => {
+                        callback.current(label);
+                        closeBottomSheet();
                       }}
                     >
-                      <AntDesign name={icon} color={color.primary} size={24} />
-                      <Text style={styles.title}>{label}</Text>
-                    </View>
-                  </TouchableOpacity>
-                );
-              },
-            });
-          }}
-        >
-          <Ionicons name="ellipsis-vertical" color={color.primary} size={26} />
-        </TouchableOpacity>
+                      <View
+                        style={{
+                          flex: 1,
+                          flexDirection: "row",
+                          // justifyContent: "center",
+                          // marginVertical: 0,
+                          // marginHorizontal: "auto",
+                          alignItems: "center",
+                        }}
+                      >
+                        <AntDesign
+                          name={icon}
+                          color={color.primary}
+                          size={24}
+                        />
+                        <Text style={styles.title}>{label}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                },
+              });
+            }}
+          >
+            <Ionicons
+              name="ellipsis-vertical"
+              color={color.primary}
+              size={26}
+            />
+          </TouchableOpacity>
+        </View>
+        {lastNews == true ? (
+          <View style={styles.flashMessage}>
+            <Text style={{ color: "#000" }}>
+              You have read through all currently available cards
+            </Text>
+          </View>
+        ) : null}
       </View>
     </View>
   );
@@ -140,69 +164,27 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
   },
-  descriptionContainer: {
-    // justifyContent: "flex-end",
-    // alignItems: "flex-start",
-    // flexDirection: "column",
-    // height: "100%",
-    // position: "absolute",
-    // left: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "flex-end",
-    alignItems: "center",
-  },
   header: {
     margin: 10,
     fontWeight: "bold",
     color: "black",
     fontSize: 20,
+    textTransform: "capitalize",
   },
   abstract: {
     margin: 10,
     color: "black",
     fontSize: 16,
   },
-  text: {
-    textAlign: "center",
-    fontSize: 14,
-    margin: 10,
-    color: "black",
-  },
-  bottomView: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#EE5407",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-    position: "absolute", //Here is the trick
-    bottom: 0, //Here is the trick
-  },
-  textStyle: {
-    color: "#fff",
-    fontSize: 18,
-  },
   container: {
-    // flex: 1,
-    // alignItems: "center",
-    // margin: 10,
-    flexDirection: "row",
-    alignSelf: "flex-end",
-    // justifyContent: "space-between",
-    paddingTop: 15,
-    paddingBottom: 15,
-    marginRight: 15,
+    flexDirection: "column",
   },
   button: {
     width: "15%",
-    // height: 40,
   },
   customListItem: (isEven) => ({
     width: "100%",
-    // aspectRatio: 5,
-    // backgroundColor: isEven ? "white" : color.palette.paleGrey,
     flexDirection: "column",
-    // alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: 10,
     flex: 1,
@@ -210,7 +192,28 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: color.palette.navyTwo,
-    // marginBottom: 10,
     marginLeft: 10,
+  },
+  container1: {
+    flex: 1,
+    justifyContent: "center",
+    // paddingTop: Constants.statusBarHeight,
+    backgroundColor: "#ecf0f1",
+  },
+  flashMessage: {
+    // position: "absolute",
+    backgroundColor: color.palette.warmGrey3,
+    // width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    // top: 0,
+  },
+  btnContainer: {
+    flexDirection: "row",
+    alignSelf: "flex-end",
+    paddingTop: 15,
+    paddingBottom: 15,
+    marginRight: 15,
   },
 });

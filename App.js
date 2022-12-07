@@ -13,6 +13,10 @@ import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import { store, persistor } from "./src/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import * as storage from "./src/utils/storage";
 
 if (__DEV__) {
   // At this point, Reactotron is hooked up.
@@ -25,20 +29,24 @@ export default function App() {
   const navigationRef = useRef();
   setRootNavigation(navigationRef);
 
-  // const { initialNavigationState, onNavigationStateChange } =
-  //   useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
+  const { initialNavigationState, onNavigationStateChange } =
+    useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
   return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ThemeContextProvider>
-        <BottomSheetProvider>
-          <RootNavigator
-            ref={navigationRef}
-            // initialState={initialNavigationState}
-            // onStateChange={onNavigationStateChange}
-          />
-        </BottomSheetProvider>
-      </ThemeContextProvider>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} {...{ persistor }}>
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+          <ThemeContextProvider>
+            <BottomSheetProvider>
+              <RootNavigator
+                ref={navigationRef}
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
+            </BottomSheetProvider>
+          </ThemeContextProvider>
+        </SafeAreaProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 

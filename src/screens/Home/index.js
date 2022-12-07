@@ -6,24 +6,26 @@ import { Screen } from "../../ui";
 import { getCardList } from "../../services/api";
 import photoCards from "../../constants/photoCards";
 const { width } = Dimensions.get("window");
-
+import { useSelector, useDispatch } from "react-redux";
+import { newsRequest } from "../../redux/slices";
 export const Home = () => {
   const useSwiper = useRef(null).current;
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [cardIndex, setCardIndex] = useState(0);
+  const { newsList, newsData, newsLoading } = useSelector(
+    (state) => state.news
+  );
+  const dispatch = useDispatch();
   useEffect(() => {
-    async function fetchData() {
-      const result = await getCardList();
-      setData(result?.data?.data);
-    }
-    fetchData();
-  }, []);
+    dispatch(newsRequest());
+  }, [dispatch]);
 
   const onSwipedBottomCard = (index) => {
     console.log("test", photoCards.length - 2 <= index);
   };
 
   const onSwipedTopCard = (index) => {
+    setCardIndex(index + 1);
     console.log("test", photoCards.length - 2 <= index);
   };
 
@@ -33,8 +35,10 @@ export const Home = () => {
         ref={useSwiper}
         animateCardOpacity
         containerStyle={styles.container}
-        cards={photoCards}
-        renderCard={(card) => <Card card={card} />}
+        cards={newsList}
+        renderCard={(news) => (
+          <Card news={news} lastNews={cardIndex === newsList.length - 1} />
+        )}
         cardIndex={cardIndex}
         // backgroundColor="white"
         // stackSize={2}
@@ -50,11 +54,11 @@ export const Home = () => {
         // onSwipedBottom={(cardIndex) => onSwipedBottomCard(cardIndex)}
         goBackToPreviousCardOnSwipeBottom
         disableBottomSwipe={cardIndex === 0}
-        disableTopSwipe={cardIndex === photoCards.length - 1}
-        onSwipedTop={(index) => setCardIndex(index + 1)}
+        disableTopSwipe={cardIndex === newsList?.length - 1}
+        onSwipedTop={(index) => onSwipedTopCard(index)}
         onSwipedBottom={(index) => setCardIndex(index - 1)}
         overlayOpacityHorizontalThreshold={width / 4}
-        stackSize={photoCards.length}
+        stackSize={newsList?.length}
         backgroundColor={"transparent"}
         // outputCardOpacityRangeX={[0.3, 0.5, 1, 0.5, 0.3]}
         onSwiping={(data) => console.log("23", data)}
