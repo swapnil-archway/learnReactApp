@@ -3,7 +3,7 @@ import axios from "axios";
 export const createAxiosInstance = (info) => {
   const { url, method, headers, data, params } = info;
   const axiosInstance = axios.create({
-    baseURL: "https://789e-103-239-86-38.in.ngrok.io/api",
+    baseURL: "http://13.234.108.242/api",
     // baseURL: API.baseUrls[API.currentEnv],
     headers,
   });

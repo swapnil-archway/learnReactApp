@@ -13,12 +13,11 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { SheetOptions, useBottomSheet } from "../context";
 import { color } from "../theme";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
+const screenHeight = Math.round((width * 9) / 16);
+const screenWidth = width;
 export const Card = ({ card }) => {
   const { openBottomSheet } = useBottomSheet();
-  const tabBarHeight = useBottomTabBarHeight();
-  console.log("tabBarHeight", tabBarHeight);
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -48,11 +47,7 @@ export const Card = ({ card }) => {
     // </View>
     <View
       activeOpacity={1}
-      style={[
-        styles.card,
-        { height: height - tabBarHeight },
-        // { height: height - (StatusBar.currentHeight + tabBarHeight) },
-      ]}
+      style={[styles.card, { height: screenHeight, width: screenWidth }]}
     >
       <Image style={styles.image} source={card.photo} resizeMode="cover" />
       <View style={styles.container}>
@@ -138,7 +133,7 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 6,
     shadowOpacity: 0.3,
-    // elevation: 2,
+    flex: 1,
   },
   image: {
     // borderRadius: 5,
@@ -156,7 +151,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignContent: "flex-end",
     alignItems: "center",
-    // bottom: 10,
   },
   header: {
     margin: 10,
@@ -194,8 +188,10 @@ const styles = StyleSheet.create({
     // margin: 10,
     flexDirection: "row",
     alignSelf: "flex-end",
-    padding: 10,
     // justifyContent: "space-between",
+    paddingTop: 15,
+    paddingBottom: 15,
+    marginRight: 15,
   },
   button: {
     width: "15%",
