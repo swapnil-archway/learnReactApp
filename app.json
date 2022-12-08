@@ -3,6 +3,7 @@
     "name": "learn-react-app",
     "slug": "learn-react-app",
     "version": "1.0.0",
+    "owner": "gaurav9242",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
